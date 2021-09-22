@@ -1,0 +1,27 @@
+###########
+# Objetos #
+###########
+
+*.o
+builds/
+
+###############
+# Executaveis #
+###############
+
+*.out
+minishell
+
+###############
+# libft files #
+###############
+
+Libft/builds/
+Libft/libft.a
+
+##########
+# Outros #
+##########
+
+anotações.txt
+teste/
