@@ -6,13 +6,13 @@
 #    By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/17 13:01:23 by mmoreira          #+#    #+#              #
-#    Updated: 2021/09/22 01:55:52 by mmoreira         ###   ########.fr        #
+#    Updated: 2021/09/22 18:36:51 by mmoreira         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 #--------------------------------------//---------------------------------------
 SRC_DIR	=	./sources
-SRC		=	minishell.c set_varenv.c correct_line.c
+SRC		=	minishell.c var_operations.c correct_line.c
 
 OBJ_DIR	=	./builds
 OBJ		=	$(patsubst %.c, $(OBJ_DIR)/%.o, $(SRC))

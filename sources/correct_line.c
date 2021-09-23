@@ -6,13 +6,11 @@
 /*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 01:50:38 by mmoreira          #+#    #+#             */
-/*   Updated: 2021/09/22 17:08:18 by mmoreira         ###   ########.fr       */
+/*   Updated: 2021/09/22 21:44:21 by mmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-
 
 static void	insert_spaces(char **line, int *i, int ind)
 {
@@ -81,25 +79,60 @@ void	remove_dollar(char **line, int *i)
 	(*i)--;
 }
 //------------------------------------------------------------------------------
-/* void	insert_var()
-
-void	search_var()
-
-void	delete_var() */
 //------------------------------------------------------------------------------
-/* void	replace_dollar(char *line, int *i, int ind)
-{
+//char	*ft_multi_strjoin(int len, ...)
 
+void	replace_dollar(char **line, int *i, int quote)
+{
+	t_list	*lst;
+	char	*temp;
+	char	*temp2;
+	char	*key;
+	int		j;
+
+	j = 0;
+	while (*(*line + *i + j) != ' ' && *(*line + *i + j) != '='
+			&& *(*line + *i + j) != '\0')
+	{
+		if (*(*line + *i + j) == '\'' && ft_strchr((*line + *i + j + 1), '\'' ))
+			break ;
+		if (*(*line + *i + j) == '\"')
+		{
+			if (quote == 1)
+				break ;
+			else if (ft_strchr((*line + *i + j + 1), '\"'))
+				break ;
+		}
+		j++;
+	}
+	temp = ft_substr(*line, 0, *i);
+	key = ft_substr(*line, *i + 1, j);
+	lst = search_var(key);
+	if (lst)
+	{
+		temp2 = ft_strjoin(temp, ((t_var *)lst->vol)->value);
+		free(temp);
+		temp = temp2;
+	}
+	temp2 =ft_strdup(*line + *i + j);
+	free(*line);
+	if(temp2)
+/* 	*line = ft_strjoin(temp,temp2);
+		printf("%s--\n",*line);
+	exit(0); */
+	free(temp);
+	free(temp2);
+	(*i) += j - 1;
 }
- */
+
 void	check_dollar(char **line, int *i, int quote)
 {
 	if (*(*line + *i + 1) == '\"')
 	{
 		if (quote == -1 && ft_strchr((*line + *i + 2), '\"'))
 			remove_dollar(line, i);
-		else if (quote == -1 && !(ft_strchr((*line + *i + 2), '\"')))
-			printf("decidir o que fazer\n");
+/* 		else if (quote == -1 && !(ft_strchr((*line + *i + 2), '\"')))
+			printf("decidir o que fazer\n"); */
 		if (quote == 1)
 			return ;
 	}
@@ -107,8 +140,8 @@ void	check_dollar(char **line, int *i, int quote)
 	{
 		if (ft_strchr((*line + *i + 2), '\''))
 			remove_dollar(line, i);
-		else
-			printf("decidir o que fazer\n");
+/* 		else
+			printf("decidir o que fazer\n"); */
 	}
 	else if (*(*line + *i + 1) == '$')
 	{
@@ -118,8 +151,7 @@ void	check_dollar(char **line, int *i, int quote)
 	else if (*(*line + *i + 1) == ' ' || *(*line + *i + 1) == '=')
 		return ;
 	else
-		printf("subistituir valor variavel\n");//Parar de ler o dolar em = oi ' '
-		//caso não tenha some dolar e a string
+		replace_dollar(line, i, quote);
 }
 
 
@@ -140,8 +172,8 @@ void	correct_line(char **line)
 			db_quote *= on_off_quotes((*line + i), db_quote, sp_quote, '\"');
 		if (sp_quote == -1 && db_quote == -1)
 			check_spaces(line, &i);
-		if (*(*line + i) == '$' && sp_quote == -1)
-			check_dollar(line, &i, db_quote);
 	}
 }
 
+/* 		if (*(*line + i) == '$' && sp_quote == -1)
+			check_dollar(line, &i, db_quote); */

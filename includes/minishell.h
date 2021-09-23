@@ -6,7 +6,7 @@
 /*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 13:07:52 by mmoreira          #+#    #+#             */
-/*   Updated: 2021/09/22 01:57:22 by mmoreira         ###   ########.fr       */
+/*   Updated: 2021/09/22 19:24:53 by mmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,21 +28,26 @@
 
 typedef struct s_var
 {
+	int			env;
 	char		*key;
 	char		*value;
 }				t_var;
 
 typedef struct s_shell
 {
-	t_list		*env;
-	t_list		*local;
+	t_list		*varenv;
 }				t_shell;
 
 t_shell			g_shell;
 
 //---------------------------------set_varenv-----------------------------------
+
 void			free_var(void *var);
+t_list			*search_var(char *key);
+void			delete_var(char *key);
+int				insert_var(char *arg, int env);
 int				set_varenv(char **envp);
+
 
 //--------------------------------correct_line----------------------------------
 void			correct_line(char **line);

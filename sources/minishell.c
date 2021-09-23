@@ -6,7 +6,7 @@
 /*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 13:07:41 by mmoreira          #+#    #+#             */
-/*   Updated: 2021/09/22 16:28:07 by mmoreira         ###   ########.fr       */
+/*   Updated: 2021/09/22 21:06:10 by mmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	loop_prompt(void)
 {
 	char	*prompt;
 	char	*line;
+	int		i;
 
 	while (1)
 	{
@@ -44,7 +45,11 @@ void	loop_prompt(void)
 		correct_line(&line);
 		printf("%s\n", line);
 		//Executar
-		if (!(ft_strncmp(line, "exit", ft_strlen(line))) && *line != '\0')
+		if (ft_strlen(line) >= 4)
+			i = ft_strlen(line);
+		else
+			i = 4;
+		if (!(ft_strncmp(line, "exit", i)))
 		{
 			free(line);
 			break ;
@@ -63,10 +68,9 @@ int	main(int argc, char *argv[], char *envp[])
 {
 	if (argc > 1 && *argv)
 		return (0);//Pensar em uma mensagem de erro
-	g_shell.env = NULL;
-	g_shell.local = NULL;
+	g_shell.varenv = NULL;
 	if (set_varenv(envp))
-		return (0); //Falha de alocação
+		return (0); //Falha de alocação das varenv
 	loop_prompt();
 	return (0);
 }
