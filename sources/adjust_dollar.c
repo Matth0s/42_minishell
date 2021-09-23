@@ -6,7 +6,7 @@
 /*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/23 01:45:01 by mmoreira          #+#    #+#             */
-/*   Updated: 2021/09/23 03:03:02 by mmoreira         ###   ########.fr       */
+/*   Updated: 2021/09/23 12:23:49 by mmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,26 +16,31 @@ static void	remove_dollar(char **line, int *i, int ind)
 {
 	char	*temp;
 	char	*temp2;
+	char	*temp3;
+	char	*temp4;
 
 	temp = ft_substr(*line, 0, *i);
-	if (ind)
+	if (ind == 0)
+		temp2 = ft_strdup("\0");
+	else if (ind == 1)
+		temp2 = ft_strdup("965");
+	else
 	{
-		temp2 = ft_strjoin(temp, "965");
-		free(temp);
-		temp = temp2;
+		temp2 = ft_itoa(g_shell.status);
+		ind--;
 	}
-	temp2 = ft_strdup(*line + *i + 1);
+	temp3 = ft_strdup(*line + *i + ind + 1);
+	temp4 = ft_strjoin(temp, temp2);
 	free(*line);
-	*line = ft_strjoin(temp, temp2);
+	*line = ft_strjoin(temp4, temp3);
+	*i = *i - 1 + ft_strlen(temp2);
 	free(temp);
 	free(temp2);
-	if (ind)
-		*i = --(*i) + 3;
-	else
-		(*i)--;
+	free(temp3);
+	free(temp4);
 }
 
-static int	aux_replace_var_value(char *line, int quote)
+static int	get_dollar_j(char *line, int quote)
 {
 	int		j;
 
@@ -57,33 +62,30 @@ static int	aux_replace_var_value(char *line, int quote)
 	return (j);
 }
 
-static void	replace_var_value(char **line, int *i, int quote)
+static void	replace_dollar(char **line, int *i, int quote)
 {
 	t_list	*lst;
 	char	*temp;
 	char	*temp2;
+	char	*temp3;
 	int		j;
 
-	j = aux_replace_var_value(*line + *i, quote);
 	temp = ft_substr(*line, 0, *i);
+	j = get_dollar_j(*line + *i, quote);
 	temp2 = ft_substr(*line, *i + 1, j - 1);
 	lst = search_var(temp2);
 	free(temp2);
 	if (lst)
-	{
 		temp2 = ft_strjoin(temp, ((t_var *)lst->vol)->value);
-		free(temp);
-		temp = temp2;
-	}
-	temp2 = ft_strdup(*line + *i + j);
+	else
+		temp2 = ft_strjoin(temp, "\0");
+	temp3 = ft_strdup(*line + *i + j);
 	free(*line);
-	*line = ft_strjoin(temp, temp2);
+	*line = ft_strjoin(temp2, temp3);
+	*i = *i - 1 + ft_strlen(temp2) - ft_strlen(temp);
 	free(temp);
 	free(temp2);
-	if (lst)
-		*i = *i - 1 + ft_strlen(((t_var *)lst->vol)->value);
-	else
-		*i = *i - 1;
+	free(temp3);
 }
 
 static void	check_dollar(char **line, int *i, int quote)
@@ -92,8 +94,6 @@ static void	check_dollar(char **line, int *i, int quote)
 	{
 		if (quote == -1 && ft_strchr((*line + *i + 2), '\"'))
 			remove_dollar(line, i, 0);
-		if (quote == 1)
-			return ;
 	}
 	else if (*(*line + *i + 1) == '\'')
 	{
@@ -101,17 +101,16 @@ static void	check_dollar(char **line, int *i, int quote)
 			remove_dollar(line, i, 0);
 	}
 	else if (*(*line + *i + 1) == '$')
-	{
-		(*i)++;
 		remove_dollar(line, i, 1);
-	}
+	else if (*(*line + *i + 1) == '?')
+		remove_dollar(line, i, 2);
 	else if (*(*line + *i + 1) == ' ' || *(*line + *i + 1) == '=')
 		return ;
 	else
-		replace_var_value(line, i, quote);
+		replace_dollar(line, i, quote);
 }
 
-void	replace_dollar(char **line)
+void	adjust_dollar(char **line)
 {
 	int		db_quote;
 	int		sp_quote;

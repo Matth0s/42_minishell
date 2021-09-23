@@ -6,7 +6,7 @@
 /*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 13:07:52 by mmoreira          #+#    #+#             */
-/*   Updated: 2021/09/23 03:05:11 by mmoreira         ###   ########.fr       */
+/*   Updated: 2021/09/23 19:12:26 by mmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct s_var
 typedef struct s_shell
 {
 	t_list		*varenv;
+	int			status;
 }				t_shell;
 
 t_shell			g_shell;
@@ -51,6 +52,8 @@ int				set_varenv(char **envp);
 //--------------------------------correct_line----------------------------------
 int				on_off_quotes(char *line, int quote1, int quote2, char c);
 void			adjust_redirects(char **line);
-void			replace_dollar(char **line);
+void			adjust_dollar(char **line);
+
+char			**split_line(char *line);
 
 #endif
