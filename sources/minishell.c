@@ -6,7 +6,7 @@
 /*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 13:07:41 by mmoreira          #+#    #+#             */
-/*   Updated: 2021/09/23 00:17:54 by mmoreira         ###   ########.fr       */
+/*   Updated: 2021/09/23 03:04:14 by mmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,17 @@ void	loop_prompt(void)
 	while (1)
 	{
 		//--Definir os sinais
+
 		//Ler
 		prompt = make_prompt();
 		line = readline(prompt);
 		free(prompt);
 		if (line && *line)
 			add_history(line);
-		//Analisar
-		correct_line(&line);
+		adjust_redirects(&line);
+		replace_dollar(&line);
 		printf("%s\n", line);
+
 		//Executar
 		if (ft_strlen(line) >= 4)
 			i = ft_strlen(line);
@@ -74,4 +76,5 @@ int	main(int argc, char *argv[], char *envp[])
 	loop_prompt();
 	return (0);
 }
+
 //Lembrar de limpar variavel global final

@@ -6,7 +6,7 @@
 /*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 02:32:28 by mmoreira          #+#    #+#             */
-/*   Updated: 2021/09/22 19:12:37 by mmoreira         ###   ########.fr       */
+/*   Updated: 2021/09/23 03:03:15 by mmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_list	*search_var(char *key)
 	int		i;
 
 	lst = g_shell.varenv;
-	while(lst)
+	while (lst)
 	{
 		var = (t_var *)lst->vol;
 		if (ft_strlen(var->key) >= ft_strlen(key))
