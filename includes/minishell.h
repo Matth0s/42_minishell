@@ -6,7 +6,7 @@
 /*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 13:07:52 by mmoreira          #+#    #+#             */
-/*   Updated: 2021/09/25 15:41:27 by mmoreira         ###   ########.fr       */
+/*   Updated: 2021/09/25 16:38:41 by mmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,21 +53,21 @@ int				insert_var(char *arg, int env);
 int				set_varenv(char **envp);
 //get_envp
 
-//--------------------------------correct_line----------------------------------
+//------------------------------read_and_adjust---------------------------------
 int				on_off_quotes(char *line, int quote1, int quote2, char c);
 void			adjust_redirects(char **line);
 void			adjust_dollar(char **line);
 
-char			**split_line(char *line);
+//---------------------------------tokenizer------------------------------------
+int				is_operator(char *arg);
+int				split_line(char ***split, char *line);
+int				check_syntax_error(char **split);
+int				tokenizer(t_list **tokens, char ***split);
 
 //-------------------------------free_functions---------------------------------
 void			free_split_of_split(char **str);
 void			free_var(void *var);
 void			free_command(void *command);
 void			free_token(t_list **tokens, char **str, int i);
-
-int	tokenizer(t_list **tokens, char ***split);
-int	check_syntax_error(char **split);
-
 
 #endif

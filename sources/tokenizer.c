@@ -6,12 +6,11 @@
 /*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 15:39:11 by mmoreira          #+#    #+#             */
-/*   Updated: 2021/09/25 15:40:26 by mmoreira         ###   ########.fr       */
+/*   Updated: 2021/09/25 16:32:30 by mmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 int	is_operator(char *arg)
 {
@@ -40,7 +39,7 @@ int	check_syntax_error(char **split)
 	return (0);
 }
 
-int	add_command(t_list **tokens, char ** args)
+static int	add_command(t_list **tokens, char ** args)
 {
 	t_command	*command;
 	t_list		*lst;

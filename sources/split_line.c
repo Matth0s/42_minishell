@@ -6,7 +6,7 @@
 /*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/23 19:11:03 by mmoreira          #+#    #+#             */
-/*   Updated: 2021/09/23 19:19:22 by mmoreira         ###   ########.fr       */
+/*   Updated: 2021/09/25 16:05:05 by mmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ static int	split_number_args(char *line)
 	return (args);
 }
 
-char	**split_line(char *line)
+int	split_line(char ***split, char *line)
 {
 	char	**temp;
 	char	**temp2;
@@ -119,15 +119,16 @@ char	**split_line(char *line)
 
 	i = split_number_args(line);
 	if (!(i))
-		return (NULL);
+		return (2);
 	temp = malloc((i + 1) * sizeof(char *));
 	if (!(temp))
-		return (NULL);
+		return (1);
 	*(temp + i) = NULL;
 	temp2 = temp;
 	split_get_args(&temp2, line);
 	i = -1;
 	while (*(temp + ++i))
 		split_remove_quotes((temp + i));
-	return (temp);
+	*split = temp;
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 02:32:28 by mmoreira          #+#    #+#             */
-/*   Updated: 2021/09/25 15:35:21 by mmoreira         ###   ########.fr       */
+/*   Updated: 2021/09/25 16:34:29 by mmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,3 +83,5 @@ int	set_varenv(char **envp)
 	}
 	return (0);
 }
+
+//int	get_envp()

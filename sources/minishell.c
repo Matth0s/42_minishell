@@ -6,13 +6,13 @@
 /*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 13:07:41 by mmoreira          #+#    #+#             */
-/*   Updated: 2021/09/25 15:57:31 by mmoreira         ###   ########.fr       */
+/*   Updated: 2021/09/25 16:33:11 by mmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	read_and_adjust(char **line)
+static int	read_and_adjust(char **line)
 {
 	char	*prompt;
 	char	buff[4096];
@@ -20,6 +20,7 @@ int	read_and_adjust(char **line)
 	getcwd(buff, sizeof(buff));
 	prompt = ft_strjoin(buff, "$ ");
 	*line = readline(prompt);
+	printf("%s\n\n", *line);
 	free(prompt);
 	if (!(*(*line)))
 	{
@@ -32,13 +33,62 @@ int	read_and_adjust(char **line)
 	return (0);
 }
 
+void	print_tokens(t_list *tokens)
+{
+	t_list	*lst;
+	int		i;
+
+	lst = tokens;
+	while (lst)
+	{
+		i = -1;
+		while (*(((t_command *)lst->vol)->args + ++i) != NULL)
+			printf("%s ",*(((t_command *)lst->vol)->args + i));
+		printf("\n");
+		lst = lst->next;
+	}
+}
+
+static int	split_and_tokenizer(t_list **tokens, char *line)
+{
+	char	**split;
+	int		i;
+
+	i = split_line(&split, line);
+	if (i == 1)
+	{
+		printf("Erro em alocação de memoria\n");
+		exit(1);
+	}
+	if (i == 2)
+	{
+		free(line);
+		return (1);
+	}
+	i = check_syntax_error(split);
+	if (i)
+	{
+		printf("minishell: syntax error near unexpected token `%s'\n",*(split + i - 1));
+		g_shell.status = 2;
+		ft_free_split(split);
+		free(line);
+		return (1);
+	}
+	*tokens = NULL;
+	if (tokenizer(tokens, &split))
+	{
+		printf("Erro em alocação de memoria\n");
+		exit(1);
+	}
+	print_tokens(*tokens);
+	free_token(tokens, split, 0);
+	return (0);
+}
+
 void	loop_prompt(void)
 {
 	char	*line;
-	char	**split;
 	t_list	*tokens;
-	t_list	*cmd;
-	int		i;
 
 	while (1)
 	{
@@ -50,39 +100,8 @@ void	loop_prompt(void)
 		//------------------------------------
 
 		//Analisar  --------------------------
-		split = split_line(line);
-		if (!(split))
-		{
-			free(line);
-			continue ; //Pode ser erro de malloc ou linha só com espaços
-		}
-		i = check_syntax_error(split);
-		if (i)
-		{
-
-			printf("minishell: syntax error near unexpected token `%s'\n",*(split + i - 1));
-			g_shell.status = 2;
-			ft_free_split(split);
-			free(line);
-			continue ; //Erro de sintax
-		}
-		tokens = NULL;
- 		if (tokenizer(&tokens, &split))
-		{
-			free(line);
-			continue ; //Erro de malloc
-		}
-		cmd = tokens;
-		while (cmd)
-		{
-			i = -1;
-			while (*(((t_command *)cmd->vol)->args + ++i) != NULL)
-				printf("%s ",*(((t_command *)cmd->vol)->args + i));
-			printf("\n");
-			cmd = cmd->next;
-		}
-		free_token(&tokens, split, 0);
-		printf("%s\n", line);
+		if (split_and_tokenizer(&tokens, line))
+			continue ;//Linha cheia de espaços
 		//------------------------------------
 
 		//Executar  --------------------------
@@ -98,20 +117,20 @@ void	loop_prompt(void)
 	}
 }
 
-/* 	rl_on_new_line();
-	rl_clear_history();
-	rl_replace_line (const char * text, int clear_undo);
-	rl_redisplay(); */
-	//Pegar a visão das funções do readline / Falar com a lais
+// rl_on_new_line();
+// rl_clear_history();
+// rl_replace_line (const char * text, int clear_undo);
+// rl_redisplay();
+// Pegar a visão das funções do readline / Falar com a lais
 
 int	main(int argc, char *argv[], char *envp[])
 {
 	if (argc > 1 && *argv)
-		return (0);//Pensar em uma mensagem de erro
+		return (1);//Pensar em uma mensagem de erro
 	g_shell.varenv = NULL;
 	g_shell.status = 0;
 	if (set_varenv(envp))
-		return (0); //Falha de alocação das varenv
+		return (1); //Falha de alocação das varenv
 	loop_prompt();
 	return (0);
 }
