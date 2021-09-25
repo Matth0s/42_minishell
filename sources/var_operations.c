@@ -6,37 +6,22 @@
 /*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 02:32:28 by mmoreira          #+#    #+#             */
-/*   Updated: 2021/09/23 03:03:15 by mmoreira         ###   ########.fr       */
+/*   Updated: 2021/09/25 15:35:21 by mmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_var(void *var)
-{
-	if (((t_var *)var)->key)
-		free(((t_var *)var)->key);
-	if (((t_var *)var)->value)
-		free(((t_var *)var)->value);
-	if (var)
-		free(var);
-}
-
 t_list	*search_var(char *key)
 {
 	t_list	*lst;
 	t_var	*var;
-	int		i;
 
 	lst = g_shell.varenv;
 	while (lst)
 	{
 		var = (t_var *)lst->vol;
-		if (ft_strlen(var->key) >= ft_strlen(key))
-			i = ft_strlen(var->key);
-		else
-			i = ft_strlen(key);
-		if (!(ft_strncmp(var->key, key, i)))
+		if (!(ft_strcmp(var->key, key)))
 			return (lst);
 		lst = lst->next;
 	}

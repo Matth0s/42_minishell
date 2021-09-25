@@ -6,7 +6,7 @@
 /*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/17 14:23:31 by mmoreira          #+#    #+#             */
-/*   Updated: 2021/09/21 22:37:16 by mmoreira         ###   ########.fr       */
+/*   Updated: 2021/09/24 18:38:11 by mmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ double				ft_atod(const char *nptr);
 int					ft_atoi(const char *nptr);
 void				ft_bzero(void *s, size_t n);
 char				*ft_strchr(const char *s, int c);
+int					ft_strcmp(char *s1, char *s2);
 size_t				ft_strlcat(char *dst, const char *src, size_t size);
 size_t				ft_strlcpy(char *dst, const char *src, size_t size);
 size_t				ft_strlen(const char *s);

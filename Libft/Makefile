@@ -6,7 +6,7 @@
 #    By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/20 09:50:28 by mmoreira          #+#    #+#              #
-#    Updated: 2021/09/21 22:36:30 by mmoreira         ###   ########.fr        #
+#    Updated: 2021/09/24 18:43:36 by mmoreira         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,8 +44,9 @@ SRC		=	ft_addchar.c ft_calloc.c ft_itoa_base.c ft_itoa.c ft_split.c \
 			print_address.c print_char.c print_hex.c print_int.c \
 			print_string.c print_uint.c while_print.c \
 			\
-			ft_atod.c ft_atoi.c ft_bzero.c ft_strchr.c ft_strlcat.c \
-			ft_strlcpy.c ft_strlen.c ft_strncmp.c ft_strnstr.c ft_strrchr.c
+			ft_atod.c ft_atoi.c ft_bzero.c ft_strchr.c ft_strcmp.c \
+			ft_strlcat.c ft_strlcpy.c ft_strlen.c ft_strncmp.c ft_strnstr.c \
+			ft_strrchr.c
 
 OBJ_DIR	=	./builds
 OBJ		=	$(patsubst %.c, $(OBJ_DIR)/%.o, $(SRC))

@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/12 18:06:03 by mmoreira          #+#    #+#             */
-/*   Updated: 2021/09/20 13:29:00 by mmoreira         ###   ########.fr       */
+/*   Created: 2021/09/24 18:32:12 by mmoreira          #+#    #+#             */
+/*   Updated: 2021/09/24 18:37:38 by mmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+int	ft_strcmp(char *s1, char *s2)
 {
-	char	*temp;
+	int	i;
 
-	if (!s1 || !s2)
-		return (NULL);
-	temp = malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
-	if (!(temp))
-		return (NULL);
-	ft_strlcpy(temp, s1, (ft_strlen(s1) + 1));
-	ft_strlcat(temp, s2, (ft_strlen(s1) + ft_strlen(s2) + 1));
-	return (temp);
+	i = 0;
+	while (*(s1 + i) != '\0' || *(s2 + i) != '\0')
+	{
+		if (*(s1 + i) != *(s2 + i))
+			return (*(s1 + i) - *(s2 + i));
+		i++;
+	}
+	return (0);
 }

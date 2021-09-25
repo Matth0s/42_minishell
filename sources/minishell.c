@@ -6,47 +6,38 @@
 /*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 13:07:41 by mmoreira          #+#    #+#             */
-/*   Updated: 2021/09/23 19:27:05 by mmoreira         ###   ########.fr       */
+/*   Updated: 2021/09/25 15:57:31 by mmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*make_prompt(void)
+int	read_and_adjust(char **line)
 {
 	char	*prompt;
-	char	*buff;
-	char	*pwd;
+	char	buff[4096];
 
-	buff = NULL;
-	pwd = getcwd(buff, 0);
-	prompt = ft_strjoin(pwd, "$ ");
-	free(pwd);
-	free(buff);
-	return (prompt);
-}
-
-int	temp_exit(char *line)
-{
-	int	i;
-
-	if (ft_strlen(line) >= 4)
-		i = ft_strlen(line);
-	else
-		i = 4;
-	if (!(ft_strncmp(line, "exit", i)))
+	getcwd(buff, sizeof(buff));
+	prompt = ft_strjoin(buff, "$ ");
+	*line = readline(prompt);
+	free(prompt);
+	if (!(*(*line)))
 	{
-		free(line);
+		free(*line);
 		return (1);
 	}
+	add_history(*line);
+	adjust_redirects(line);
+	adjust_dollar(line);
 	return (0);
 }
 
 void	loop_prompt(void)
 {
-	char	*prompt;
 	char	*line;
 	char	**split;
+	t_list	*tokens;
+	t_list	*cmd;
 	int		i;
 
 	while (1)
@@ -54,17 +45,8 @@ void	loop_prompt(void)
 		//--Definir os sinais
 
 		//Ler  ------------------------------
-		prompt = make_prompt();
-		line = readline(prompt);
-		free(prompt);
-		if (*line == '\0')
-		{
-			free(line);
-			continue ;
-		}
-		add_history(line);
-		adjust_redirects(&line);
-		adjust_dollar(&line);
+		if (read_and_adjust(&line))
+			continue ;// Linha Vazia
 		//------------------------------------
 
 		//Analisar  --------------------------
@@ -72,21 +54,47 @@ void	loop_prompt(void)
 		if (!(split))
 		{
 			free(line);
-			continue ;
+			continue ; //Pode ser erro de malloc ou linha só com espaços
 		}
-		i = -1;
-		while (*(split + ++i) != NULL)
-			printf("%s_",*(split + i));
-		printf("\n%s\n", line);
-		ft_free_split(split);
+		i = check_syntax_error(split);
+		if (i)
+		{
+
+			printf("minishell: syntax error near unexpected token `%s'\n",*(split + i - 1));
+			g_shell.status = 2;
+			ft_free_split(split);
+			free(line);
+			continue ; //Erro de sintax
+		}
+		tokens = NULL;
+ 		if (tokenizer(&tokens, &split))
+		{
+			free(line);
+			continue ; //Erro de malloc
+		}
+		cmd = tokens;
+		while (cmd)
+		{
+			i = -1;
+			while (*(((t_command *)cmd->vol)->args + ++i) != NULL)
+				printf("%s ",*(((t_command *)cmd->vol)->args + i));
+			printf("\n");
+			cmd = cmd->next;
+		}
+		free_token(&tokens, split, 0);
+		printf("%s\n", line);
 		//------------------------------------
 
 		//Executar  --------------------------
-		if (temp_exit(line))
+		if (!(ft_strcmp(line, "exit")))
+		{
+			free(line);
 			break ;
+		}
 		//------------------------------------
 
 		free(line);
+		g_shell.status = 0;
 	}
 }
 

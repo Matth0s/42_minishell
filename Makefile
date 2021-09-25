@@ -6,7 +6,7 @@
 #    By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/17 13:01:23 by mmoreira          #+#    #+#              #
-#    Updated: 2021/09/23 19:11:39 by mmoreira         ###   ########.fr        #
+#    Updated: 2021/09/25 15:40:55 by mmoreira         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,9 @@ SRC		=	minishell.c \
 			var_operations.c \
 			adjust_redirects.c \
 			adjust_dollar.c \
-			split_line.c
+			split_line.c \
+			free_functions.c \
+			tokenizer.c
 
 OBJ_DIR	=	./builds
 OBJ		=	$(patsubst %.c, $(OBJ_DIR)/%.o, $(SRC))
