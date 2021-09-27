@@ -6,7 +6,7 @@
 #    By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/20 09:50:28 by mmoreira          #+#    #+#              #
-#    Updated: 2021/09/24 18:43:36 by mmoreira         ###   ########.fr        #
+#    Updated: 2021/09/27 01:00:43 by mmoreira         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,7 @@ SRC		=	ft_addchar.c ft_calloc.c ft_itoa_base.c ft_itoa.c ft_split.c \
 			ft_memccpy.c ft_memchr.c ft_memcmp.c ft_memcpy.c ft_memmove.c \
 			ft_memset.c \
 			\
-			ft_check_base.c ft_free_split.c ft_multi_strjoin.c ft_numlen.c \
+			ft_check_base.c ft_free_split.c ft_numlen.c ft_splitlen.c \
 			\
 			check_flags.c init_struct.c print_type.c ft_printf.c \
 			print_address.c print_char.c print_hex.c print_int.c \

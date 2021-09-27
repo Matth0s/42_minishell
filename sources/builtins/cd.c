@@ -6,7 +6,7 @@
 /*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 13:30:24 by mmoreira          #+#    #+#             */
-/*   Updated: 2021/09/26 21:55:15 by mmoreira         ###   ########.fr       */
+/*   Updated: 2021/09/27 01:10:12 by mmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	cd_b(char **args)
 {
 	int		i;
 
-	i = len_split(args);
+	i = ft_splitlen(args);
 	if (i > 2)
 	{
 		ft_putendl_fd("Minishell: cd: too many arguments", 2);

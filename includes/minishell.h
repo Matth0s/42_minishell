@@ -6,7 +6,7 @@
 /*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 13:07:52 by mmoreira          #+#    #+#             */
-/*   Updated: 2021/09/26 21:45:09 by mmoreira         ###   ########.fr       */
+/*   Updated: 2021/09/27 00:57:21 by mmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <sys/stat.h>
 
 # include <sys/wait.h>
+# include <signal.h>
 
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -83,16 +84,17 @@ void			unset_b(char **args);
 void			env_b(void);
 void			exit_b(char **args);
 
+//-----------------------------------signal-------------------------------------
+//				futuramente sighandler_in_exec
+void			sighandler_in_prompt(int sig);
+void			set_sigaction(struct sigaction *newact, void (*handler)(int));
+
 //-------------------------------free_functions---------------------------------
 void			free_split_of_split(char **str);
 void			free_var(void *var);
 void			free_command(void *command);
 void			free_token(t_list **tokens, char **str, int i);
 
-
-int				len_split(char **str);
-void			print_tokens(t_list *tokens);
-void			print_split(char **str);
 
 
 #endif

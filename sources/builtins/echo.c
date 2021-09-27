@@ -6,7 +6,7 @@
 /*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 19:02:43 by mmoreira          #+#    #+#             */
-/*   Updated: 2021/09/26 21:54:48 by mmoreira         ###   ########.fr       */
+/*   Updated: 2021/09/27 01:10:25 by mmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	echo_b(char	**args)
 {
 	int	i;
 
-	i = len_split(args);
+	i = ft_splitlen(args);
 	if (i == 1)
 		ft_putendl_fd("\0", 1);
 	else

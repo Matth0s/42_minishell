@@ -6,7 +6,7 @@
 /*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 13:07:41 by mmoreira          #+#    #+#             */
-/*   Updated: 2021/09/26 23:18:40 by mmoreira         ###   ########.fr       */
+/*   Updated: 2021/09/27 00:54:10 by mmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,12 +96,14 @@ void	exec_all_commands(t_list *tokens)
 
 void	loop_prompt(void)
 {
-	char	*line;
-	t_list	*tokens;
+	struct sigaction	newact;
+	char				*line;
+	t_list				*tokens;
 
 	while (1)
 	{
-		//--Definir os sinais
+		//Definir os sinais------------------
+		set_sigaction(&newact, sighandler_in_prompt);
 		//Ler  ------------------------------
 		if (read_and_adjust(&line))
 			continue ;
@@ -109,16 +111,16 @@ void	loop_prompt(void)
 		if (split_and_tokenizer(&tokens, line))
 			continue ;
 		//Executar  --------------------------
+		if (!(ft_strcmp(((t_command *)tokens->vol)->args[0], "exit")))
+		{
+			free_token(&tokens, ((t_command *)tokens->vol)->args, 0);
+			break ;
+		}
 		exec_all_commands(tokens);
 		free_token(&tokens, ((t_command *)tokens->vol)->args, 0);
 		//------------------------------------
 	}
 }
-
-// rl_on_new_line();
-// rl_clear_history();
-// rl_replace_line (const char * text, int clear_undo);
-// rl_redisplay();
 
 int	main(int argc, char *argv[], char *envp[])
 {
