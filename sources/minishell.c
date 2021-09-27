@@ -6,7 +6,7 @@
 /*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 13:07:41 by mmoreira          #+#    #+#             */
-/*   Updated: 2021/09/26 22:05:42 by mmoreira         ###   ########.fr       */
+/*   Updated: 2021/09/26 23:18:40 by mmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,19 @@
 
 static int	read_and_adjust(char **line)
 {
-	char	*prompt;
 	char	buff[4096];
+	char	*prompt_green;
+	char	*prompt_reset;
+	char	*prompt_full;
 
 	getcwd(buff, sizeof(buff));
-	prompt = ft_strjoin(buff, "$ ");
-	*line = readline(prompt);
-	free(prompt);
+	prompt_green = ft_strjoin("\001\033[1;32m\002", buff);
+	prompt_reset = ft_strjoin("\001\033[0;0m\002", "$ ");
+	prompt_full = ft_strjoin(prompt_green, prompt_reset);
+	*line = readline(prompt_full);
+	free(prompt_green);
+	free(prompt_reset);
+	free(prompt_full);
 	if (!(*(*line)))
 	{
 		free(*line);
