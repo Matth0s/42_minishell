@@ -6,17 +6,17 @@
 /*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/17 14:23:31 by mmoreira          #+#    #+#             */
-/*   Updated: 2021/09/24 18:38:11 by mmoreira         ###   ########.fr       */
+/*   Updated: 2021/09/25 20:48:30 by mmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
-# include <sys/resource.h>
-# include <stddef.h>
-# include <stdlib.h>
 # include <unistd.h>
+# include <stdlib.h>
+# include <stddef.h>
 # include <stdarg.h>
+# include <sys/resource.h>
 # define BUFFER_SIZE 42
 
 typedef struct s_list

@@ -1,29 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_split.c                                    :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/14 16:01:46 by mmoreira          #+#    #+#             */
-/*   Updated: 2021/09/25 20:49:20 by mmoreira         ###   ########.fr       */
+/*   Created: 2021/09/26 17:39:23 by mmoreira          #+#    #+#             */
+/*   Updated: 2021/09/26 21:53:45 by mmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-void	ft_free_split(char **str)
+void	exit_b(char **args)
 {
-	int	i;
-
-	i = -1;
-	if (!(str))
-		return ;
-	while (*(str + ++i) != NULL)
+	ft_putendl_fd("exit", 2);
+	if (len_split(args) > 1)
 	{
-		free(*(str + i));
-		*(str + i) = NULL;
+		ft_putstr_fd("Minishell: exit: ", 2);
+		ft_putstr_fd(*(args + 1), 2);
+		ft_putendl_fd(": numeric argument required", 2);
+		g_shell.status = 2;
 	}
-	free(str);
-	str = NULL;
+	ft_free_split(args);
+	ft_lstclear(&g_shell.varenv, free_var);
+	exit(g_shell.status);
 }

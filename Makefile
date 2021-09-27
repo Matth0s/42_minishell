@@ -6,19 +6,32 @@
 #    By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/17 13:01:23 by mmoreira          #+#    #+#              #
-#    Updated: 2021/09/25 15:40:55 by mmoreira         ###   ########.fr        #
+#    Updated: 2021/09/26 20:04:31 by mmoreira         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 #--------------------------------------//---------------------------------------
-SRC_DIR	=	./sources
+SRC_DIR	=	./sources \
+			./sources/builtins
 SRC		=	minishell.c \
 			var_operations.c \
 			adjust_redirects.c \
 			adjust_dollar.c \
 			split_line.c \
 			free_functions.c \
-			tokenizer.c
+			tokenizer.c \
+			exec_builtins.c \
+			exec_no_builtins.c \
+			\
+			cd.c \
+			echo.c \
+			env.c \
+			exit.c \
+			export.c \
+			pwd.c \
+			unset.c \
+			\
+			utils.c
 
 OBJ_DIR	=	./builds
 OBJ		=	$(patsubst %.c, $(OBJ_DIR)/%.o, $(SRC))

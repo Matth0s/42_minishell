@@ -6,7 +6,7 @@
 /*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/23 19:11:03 by mmoreira          #+#    #+#             */
-/*   Updated: 2021/09/25 16:05:05 by mmoreira         ###   ########.fr       */
+/*   Updated: 2021/09/26 19:46:41 by mmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ int	split_line(char ***split, char *line)
 
 	i = split_number_args(line);
 	if (!(i))
-		return (2);
+		return (1);
 	temp = malloc((i + 1) * sizeof(char *));
 	if (!(temp))
 		return (1);

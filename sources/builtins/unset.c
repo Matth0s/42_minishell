@@ -1,29 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_split.c                                    :+:      :+:    :+:   */
+/*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/14 16:01:46 by mmoreira          #+#    #+#             */
-/*   Updated: 2021/09/25 20:49:20 by mmoreira         ###   ########.fr       */
+/*   Created: 2021/09/26 18:39:03 by mmoreira          #+#    #+#             */
+/*   Updated: 2021/09/26 21:53:33 by mmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-void	ft_free_split(char **str)
+void	unset_b(char **args)
 {
-	int	i;
+	t_list	*lst;
 
-	i = -1;
-	if (!(str))
-		return ;
-	while (*(str + ++i) != NULL)
-	{
-		free(*(str + i));
-		*(str + i) = NULL;
-	}
-	free(str);
-	str = NULL;
+	lst = search_var(*(args + 1));
+	if (lst)
+		delete_var(*(args + 1));
+	g_shell.status = 0;
 }

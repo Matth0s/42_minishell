@@ -6,7 +6,7 @@
 /*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 15:34:19 by mmoreira          #+#    #+#             */
-/*   Updated: 2021/09/25 15:41:44 by mmoreira         ###   ########.fr       */
+/*   Updated: 2021/09/26 21:52:48 by mmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@ void	free_split_of_split(char **str)
 {
 	int	i;
 
-	i = 0;
+	i = -1;
 	if (!(str))
 		return ;
-	while (*(str + i++) != NULL)
+	while (*(str + ++i) != NULL)
 	{
-		free(*(str + i - 1));
-		*(str + i - 1) = NULL;
+		free(*(str + i));
+		*(str + i) = NULL;
 	}
 }
 
@@ -51,4 +51,3 @@ void	free_token(t_list **tokens, char **str, int i)
 	free(str);
 	str = NULL;
 }
-

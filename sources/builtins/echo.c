@@ -1,29 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_split.c                                    :+:      :+:    :+:   */
+/*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/14 16:01:46 by mmoreira          #+#    #+#             */
-/*   Updated: 2021/09/25 20:49:20 by mmoreira         ###   ########.fr       */
+/*   Created: 2021/09/26 19:02:43 by mmoreira          #+#    #+#             */
+/*   Updated: 2021/09/26 21:54:48 by mmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-void	ft_free_split(char **str)
+void	echo_b(char	**args)
 {
 	int	i;
 
-	i = -1;
-	if (!(str))
-		return ;
-	while (*(str + ++i) != NULL)
+	i = len_split(args);
+	if (i == 1)
+		ft_putendl_fd("\0", 1);
+	else
 	{
-		free(*(str + i));
-		*(str + i) = NULL;
+		if (!(strcmp(*(args + 1), "-n")))
+			i = 1;
+		else
+			i = 0;
+		while (*(args + ++i))
+		{
+			ft_putstr_fd(*(args + i), 1);
+			if (*(args + i + 1))
+				ft_putstr_fd(" ", 1);
+		}
+		if (strcmp(*(args + 1), "-n"))
+			ft_putendl_fd("\0", 1);
 	}
-	free(str);
-	str = NULL;
+	g_shell.status = 0;
 }

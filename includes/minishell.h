@@ -6,25 +6,23 @@
 /*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 13:07:52 by mmoreira          #+#    #+#             */
-/*   Updated: 2021/09/25 16:38:41 by mmoreira         ###   ########.fr       */
+/*   Updated: 2021/09/26 21:45:09 by mmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include <stdio.h>
-# include <stddef.h>
-# include <stdlib.h>
-# include <unistd.h>
+# include "./../Libft/libft.h"
+# include <errno.h>
 
-# include<sys/types.h>
-# include<sys/wait.h>
+# include <sys/types.h>
+# include <sys/stat.h>
+
+# include <sys/wait.h>
 
 # include <readline/readline.h>
 # include <readline/history.h>
-
-# include "./../Libft/libft.h"
 
 typedef struct s_var
 {
@@ -40,6 +38,7 @@ typedef struct s_command
 
 typedef struct s_shell
 {
+	int			numenv;
 	t_list		*varenv;
 	int			status;
 }				t_shell;
@@ -51,7 +50,7 @@ t_list			*search_var(char *key);
 void			delete_var(char *key);
 int				insert_var(char *arg, int env);
 int				set_varenv(char **envp);
-//get_envp
+int				get_envp(char ***envp);
 
 //------------------------------read_and_adjust---------------------------------
 int				on_off_quotes(char *line, int quote1, int quote2, char c);
@@ -64,10 +63,36 @@ int				split_line(char ***split, char *line);
 int				check_syntax_error(char **split);
 int				tokenizer(t_list **tokens, char ***split);
 
+//-------------------------------exec_functions----------------------------------
+
+//------------------------------exec_no_builtins--------------------------------
+char			*find_path_command(char *command);
+int				find_command(char ***args);
+void			exec_no_builtins(char **args);
+
+//-------------------------------exec_builtins----------------------------------
+int				is_builtins(char *command);
+void			exec_builtins(char **args);
+
+//----------------------------------builtins------------------------------------
+void			echo_b(char **args);
+void			cd_b(char **args);
+void			pwd_b(void);
+void			export_b(char **args);
+void			unset_b(char **args);
+void			env_b(void);
+void			exit_b(char **args);
+
 //-------------------------------free_functions---------------------------------
 void			free_split_of_split(char **str);
 void			free_var(void *var);
 void			free_command(void *command);
 void			free_token(t_list **tokens, char **str, int i);
+
+
+int				len_split(char **str);
+void			print_tokens(t_list *tokens);
+void			print_split(char **str);
+
 
 #endif
