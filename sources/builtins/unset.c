@@ -6,7 +6,7 @@
 /*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 18:39:03 by mmoreira          #+#    #+#             */
-/*   Updated: 2021/09/26 21:53:33 by mmoreira         ###   ########.fr       */
+/*   Updated: 2021/09/28 01:45:13 by mmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,22 @@
 
 void	unset_b(char **args)
 {
-	t_list	*lst;
+	int		status;
+	int		i;
 
-	lst = search_var(*(args + 1));
-	if (lst)
-		delete_var(*(args + 1));
-	g_shell.status = 0;
+	i = 0;
+	status = 0;
+	while (*(args + ++i))
+	{
+		if (ft_strchr(*(args + i), '='))
+		{
+			ft_putstr_fd("Minishell: unset: `", 2);
+			ft_putstr_fd(*(args + i), 2);
+			ft_putendl_fd("': not a valid identifier", 2);
+			status = 1;
+		}
+		else
+			delete_var(*(args + i));
+	}
+	g_shell.status = status;
 }

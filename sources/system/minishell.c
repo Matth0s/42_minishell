@@ -6,7 +6,7 @@
 /*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 13:07:41 by mmoreira          #+#    #+#             */
-/*   Updated: 2021/09/27 00:54:10 by mmoreira         ###   ########.fr       */
+/*   Updated: 2021/09/28 02:27:49 by mmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int	read_and_adjust(char **line)
 	char	*prompt_full;
 
 	getcwd(buff, sizeof(buff));
-	prompt_green = ft_strjoin("\001\033[1;32m\002", buff);
+	prompt_green = ft_strjoin("\001\033[1;30m\002", buff);//mudar para 36
 	prompt_reset = ft_strjoin("\001\033[0;0m\002", "$ ");
 	prompt_full = ft_strjoin(prompt_green, prompt_reset);
 	*line = readline(prompt_full);
@@ -67,15 +67,35 @@ static int	split_and_tokenizer(t_list **tokens, char *line)
 	return (0);
 }
 
-void	exec_select(char **args)
+
+
+void	exec_atribuation(char **args, int ind)
+{
+	int	i;
+
+	i = 0;
+	while (*(args + ++i))
+		if (!(ft_strchr(*(args + i), '=')) || *(*(args + i)) == '=')
+			break ;
+	if (i == ft_splitlen(args))
+	{
+		i = -1;
+		while (*(args + ++i))
+			insert_var(*(args + i), 0);
+	}
+	else
+		exec_select(args + i, ind);
+}
+
+void	exec_select(char **args, int ind)
 {
 	char	*command;
 
 	command = *args;
-	if (ft_strchr(command, '='))
-		insert_var(command, 0);
+	if (ft_strchr(command, '=') && *command != '=')
+		exec_atribuation(args, ind);
 	else if (is_builtins(command))
-		exec_builtins(args);
+		exec_builtins(args, ind);
 	else
 		exec_no_builtins(args);
 }
@@ -84,15 +104,20 @@ void	exec_all_commands(t_list *tokens)
 {
 	t_list	*lst;
 	char	**args;
+	int		ind;
+	struct sigaction	newact;
 
 	lst = tokens;
+	ind = ft_lstsize(lst);
 	while (lst)
 	{
+		set_sigaction(&newact, sighandler_in_execution);
 		args = ((t_command *)lst->vol)->args;
-		exec_select(args);
+		exec_select(args, ind - 1);
 		lst = lst->next;
 	}
 }
+
 
 void	loop_prompt(void)
 {
@@ -104,12 +129,15 @@ void	loop_prompt(void)
 	{
 		//Definir os sinais------------------
 		set_sigaction(&newact, sighandler_in_prompt);
+
 		//Ler  ------------------------------
 		if (read_and_adjust(&line))
 			continue ;
+
 		//Analisar  --------------------------
 		if (split_and_tokenizer(&tokens, line))
 			continue ;
+
 		//Executar  --------------------------
 		if (!(ft_strcmp(((t_command *)tokens->vol)->args[0], "exit")))
 		{

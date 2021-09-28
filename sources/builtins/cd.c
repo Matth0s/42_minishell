@@ -6,32 +6,40 @@
 /*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 13:30:24 by mmoreira          #+#    #+#             */
-/*   Updated: 2021/09/27 01:10:12 by mmoreira         ###   ########.fr       */
+/*   Updated: 2021/09/28 01:08:13 by mmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	set_vars_pwd(void)
+static void	set_vars_pwd(void)
 {
 	char	buff[4096];
 	char	*temp;
-	t_list	*lst;
+	t_list	*lst1;
+	t_list	*lst2;
 
-	lst = search_var("PWD");
-	if (lst)
-		temp = ft_strjoin("OLDPWD=", ((t_var *)lst->vol)->value);
+	lst1 = search_var("PWD");
+	if (lst1)
+		temp = ft_strjoin("OLDPWD=", ((t_var *)lst1->vol)->value);
 	else
 		temp = ft_strjoin("OLDPWD=", "\0");
-	insert_var(temp, 1);
+	lst2 = search_var("OLDPWD");
+	if (lst2 && ((t_var *)lst2->vol)->env)
+		insert_var(temp, 1);
+	else
+		insert_var(temp, 0);
 	free(temp);
 	getcwd(buff, sizeof(buff));
 	temp = ft_strjoin("PWD=", buff);
-	insert_var(temp, 1);
+	if (lst1 && ((t_var *)lst1->vol)->env)
+		insert_var(temp, 1);
+	else
+		insert_var(temp, 0);
 	free(temp);
 }
 
-int	go_to_dir(char *dir)
+static int	go_to_dir(char *dir)
 {
 	int	i;
 
@@ -48,13 +56,16 @@ int	go_to_dir(char *dir)
 	return (0);
 }
 
-int	go_to_varenv(char *var, int ind)
+static int	go_to_varenv(char *var, int ind)
 {
 	t_list	*lst;
 
 	lst = search_var(var);
 	if (lst)
-		return (go_to_dir(((t_var *)lst->vol)->value));
+	{
+		if (*((t_var *)lst->vol)->value != '\0')
+			return (go_to_dir(((t_var *)lst->vol)->value));
+	}
 	if (ind)
 		return (go_to_dir("/"));
 	ft_putstr_fd("Minishell: cd: ", 2);
@@ -65,7 +76,7 @@ int	go_to_varenv(char *var, int ind)
 
 void	cd_b(char **args)
 {
-	int		i;
+	int	i;
 
 	i = ft_splitlen(args);
 	if (i > 2)
@@ -80,7 +91,11 @@ void	cd_b(char **args)
 		if (!(strcmp(*(args + 1), "~")))
 			g_shell.status = go_to_varenv("HOME", 1);
 		else if (!(strcmp(*(args + 1), "-")))
-			g_shell.status = go_to_varenv("OLDPWD", 1);
+		{
+			g_shell.status = go_to_varenv("OLDPWD", 0);
+			if (!(g_shell.status))
+				pwd_b();
+		}
 		else
 			g_shell.status = go_to_dir(*(args + 1));
 	}

@@ -6,7 +6,7 @@
 /*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 13:07:52 by mmoreira          #+#    #+#             */
-/*   Updated: 2021/09/27 00:57:21 by mmoreira         ###   ########.fr       */
+/*   Updated: 2021/09/28 02:16:41 by mmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void			exec_no_builtins(char **args);
 
 //-------------------------------exec_builtins----------------------------------
 int				is_builtins(char *command);
-void			exec_builtins(char **args);
+void			exec_builtins(char **args, int ind);
 
 //----------------------------------builtins------------------------------------
 void			echo_b(char **args);
@@ -81,11 +81,11 @@ void			cd_b(char **args);
 void			pwd_b(void);
 void			export_b(char **args);
 void			unset_b(char **args);
-void			env_b(void);
+void			env_b(int ind);
 void			exit_b(char **args);
 
 //-----------------------------------signal-------------------------------------
-//				futuramente sighandler_in_exec
+void			sighandler_in_execution(int sig);
 void			sighandler_in_prompt(int sig);
 void			set_sigaction(struct sigaction *newact, void (*handler)(int));
 
@@ -95,6 +95,7 @@ void			free_var(void *var);
 void			free_command(void *command);
 void			free_token(t_list **tokens, char **str, int i);
 
-
+void	exec_atribuation(char **args, int ind);
+void	exec_select(char **args, int ind);
 
 #endif
