@@ -6,7 +6,7 @@
 #    By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/17 13:01:23 by mmoreira          #+#    #+#              #
-#    Updated: 2021/09/28 01:55:50 by mmoreira         ###   ########.fr        #
+#    Updated: 2021/09/28 18:56:34 by mmoreira         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,8 +26,11 @@ SRC		=	minishell.c \
 			adjust_dollar.c \
 			\
 			split_line.c \
+			check_command.c \
 			tokenizer.c \
 			\
+			set_std_and_args.c \
+			exec_functions.c \
 			exec_builtins.c \
 			exec_no_builtins.c \
 			\
@@ -38,7 +41,6 @@ SRC		=	minishell.c \
 			export.c \
 			pwd.c \
 			unset.c \
-
 
 OBJ_DIR	=	./builds
 OBJ		=	$(patsubst %.c, $(OBJ_DIR)/%.o, $(SRC))

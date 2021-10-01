@@ -6,41 +6,11 @@
 /*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 15:39:11 by mmoreira          #+#    #+#             */
-/*   Updated: 2021/09/26 21:57:59 by mmoreira         ###   ########.fr       */
+/*   Updated: 2021/09/28 11:59:15 by mmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	is_operator(char *arg)
-{
-	if (!(ft_strcmp(arg, "|")))
-		return (1);
-	else if (!(ft_strcmp(arg, "<")) || !(ft_strcmp(arg, ">")))
-		return (2);
-	else if (!(ft_strcmp(arg, "<<")) || !(ft_strcmp(arg, ">>")))
-		return (3);
-	else
-		return (0);
-}
-
-int	check_syntax_error(char **split)
-{
-	int		i;
-
-	i = 0;
-	if (is_operator(*split) == 1)
-		return (1);
-	while (*(split + ++i))
-		if (is_operator(*(split + i)) && is_operator(*(split + i - 1)))
-			return (i + 1);
-	if (is_operator(*(split + i - 1)) == 1)
-		return (i);
-	if ((is_operator(*(split + i - 1)) == 2)
-		|| (is_operator(*(split + i - 1)) == 3))
-		return (-1);
-	return (0);
-}
 
 static int	add_command(t_list **tokens, char **args)
 {

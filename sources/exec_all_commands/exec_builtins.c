@@ -6,7 +6,7 @@
 /*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 13:17:29 by mmoreira          #+#    #+#             */
-/*   Updated: 2021/09/28 00:26:31 by mmoreira         ###   ########.fr       */
+/*   Updated: 2021/09/29 16:09:07 by mmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,23 +25,23 @@ int	is_builtins(char *command)
 	return (0);
 }
 
-void	exec_builtins(char **args, int ind)
+void	exec_builtins(char **args, int ind, int fdout)
 {
 	if ((!(ft_strcmp(*args, "echo"))))
-		echo_b(args);
+		echo_b(args, fdout);
 	else if (!(ft_strcmp(*args, "pwd")))
-		pwd_b();
+		pwd_b(fdout);
 	else if (!(ft_strcmp(*args, "env")))
-		env_b(0);
+		env_b(0, fdout);
 	else if (ind)
 	{
 		g_shell.status = 0;
 		return ;
 	}
 	else if (!(ft_strcmp(*args, "cd")))
-		cd_b(args);
+		cd_b(args, fdout);
 	else if (!(ft_strcmp(*args, "export")))
-		export_b(args);
+		export_b(args, fdout);
 	else if (!(ft_strcmp(*args, "unset")))
 		unset_b(args);
 	else

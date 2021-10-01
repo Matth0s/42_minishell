@@ -6,13 +6,27 @@
 /*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 17:23:46 by mmoreira          #+#    #+#             */
-/*   Updated: 2021/09/26 21:52:15 by mmoreira         ###   ########.fr       */
+/*   Updated: 2021/09/29 22:49:50 by mmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*serach_command(char *path, char *command)
+static void	change_standard_fd(int in, int out)
+{
+	if (in != 0)
+	{
+		dup2(in, 0);
+		close(in);
+	}
+	if (out != 1)
+	{
+		dup2(out, 1);
+		close(out);
+	}
+}
+
+static char	*serach_command(char *path, char *command)
 {
 	struct stat	buff;
 	char		*temp;
@@ -29,7 +43,7 @@ char	*serach_command(char *path, char *command)
 	return (temp);
 }
 
-char	*find_path_command(char *command)
+static char	*find_path_command(char *command)
 {
 	char		**split;
 	char		*temp;
@@ -51,7 +65,7 @@ char	*find_path_command(char *command)
 	return (temp);
 }
 
-int	find_command(char ***args)
+static int	find_command(char ***args)
 {
 	char	*command;
 	int		i;
@@ -75,7 +89,7 @@ int	find_command(char ***args)
 	return (0);
 }
 
-void	exec_no_builtins(char **args)
+void	exec_no_builtins(char **args, int fdin, int fdout)
 {
 	char	**envp;
 	int		status;
@@ -89,6 +103,7 @@ void	exec_no_builtins(char **args)
 	get_envp(&envp);
 	if (pid == 0)
 	{
+		change_standard_fd(fdin, fdout);
 		execve(*args, args, envp);
 		ft_putstr_fd("Minishell: ", 2);
 		ft_putstr_fd(*args, 2);

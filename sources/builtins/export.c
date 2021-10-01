@@ -6,7 +6,7 @@
 /*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 18:53:10 by mmoreira          #+#    #+#             */
-/*   Updated: 2021/09/28 01:45:27 by mmoreira         ###   ########.fr       */
+/*   Updated: 2021/09/29 16:07:25 by mmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	set_attribution(char *var, int *status)
 		insert_var(var, 1);
 }
 
-void	export_b(char **args)
+void	export_b(char **args, int fdout)
 {
 	t_list	*lst;
 	int		status;
@@ -34,7 +34,7 @@ void	export_b(char **args)
 	status = 0;
 	i = ft_splitlen(args);
 	if (i == 1)
-		env_b(1);
+		env_b(1, fdout);
 	else
 	{
 		i = 0;

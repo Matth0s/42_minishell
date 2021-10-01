@@ -6,20 +6,20 @@
 /*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 18:11:09 by mmoreira          #+#    #+#             */
-/*   Updated: 2021/09/26 21:53:37 by mmoreira         ###   ########.fr       */
+/*   Updated: 2021/09/29 16:07:41 by mmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	pwd_b(void)
+void	pwd_b(int fdout)
 {
 	char	*buff;
 
 	buff = getcwd(NULL, 0);
 	if (buff)
 	{
-		ft_putendl_fd(buff, 1);
+		ft_putendl_fd(buff, fdout);
 		g_shell.status = 0;
 	}
 	else

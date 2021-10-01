@@ -6,7 +6,7 @@
 /*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 13:30:24 by mmoreira          #+#    #+#             */
-/*   Updated: 2021/09/28 01:08:13 by mmoreira         ###   ########.fr       */
+/*   Updated: 2021/09/29 16:05:24 by mmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static int	go_to_varenv(char *var, int ind)
 	return (1);
 }
 
-void	cd_b(char **args)
+void	cd_b(char **args, int fdout)
 {
 	int	i;
 
@@ -94,7 +94,7 @@ void	cd_b(char **args)
 		{
 			g_shell.status = go_to_varenv("OLDPWD", 0);
 			if (!(g_shell.status))
-				pwd_b();
+				pwd_b(fdout);
 		}
 		else
 			g_shell.status = go_to_dir(*(args + 1));
