@@ -6,7 +6,7 @@
 /*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 18:53:10 by mmoreira          #+#    #+#             */
-/*   Updated: 2021/09/29 16:07:25 by mmoreira         ###   ########.fr       */
+/*   Updated: 2021/10/01 16:18:07 by mmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	export_b(char **args, int fdout)
 	else
 	{
 		i = 0;
-		while(*(args + ++i))
+		while (*(args + ++i))
 		{
 			if (ft_strchr(*(args + i), '='))
 				set_attribution(*(args + i), &status);

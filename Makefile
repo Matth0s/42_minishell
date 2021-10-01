@@ -6,7 +6,7 @@
 #    By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/17 13:01:23 by mmoreira          #+#    #+#              #
-#    Updated: 2021/09/28 18:56:34 by mmoreira         ###   ########.fr        #
+#    Updated: 2021/10/01 16:12:42 by mmoreira         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,8 +29,8 @@ SRC		=	minishell.c \
 			check_command.c \
 			tokenizer.c \
 			\
-			set_std_and_args.c \
-			exec_functions.c \
+			set_fd_and_args.c \
+			functions_exec.c \
 			exec_builtins.c \
 			exec_no_builtins.c \
 			\

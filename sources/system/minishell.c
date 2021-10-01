@@ -6,7 +6,7 @@
 /*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 13:07:41 by mmoreira          #+#    #+#             */
-/*   Updated: 2021/10/01 15:52:44 by mmoreira         ###   ########.fr       */
+/*   Updated: 2021/10/01 16:48:49 by mmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int	read_and_adjust(char **line)
 	char	*prompt_full;
 
 	getcwd(buff, sizeof(buff));
-	prompt_green = ft_strjoin("\001\033[1;36m\002", buff);
+	prompt_green = ft_strjoin("\001\033[1;32m\002", buff);
 	prompt_reset = ft_strjoin("\001\033[0;0m\002", "$ ");
 	prompt_full = ft_strjoin(prompt_green, prompt_reset);
 	*line = readline(prompt_full);
@@ -43,7 +43,6 @@ static int	read_and_adjust(char **line)
 static int	split_and_tokenizer(t_list **tokens, char *line)
 {
 	char	**split;
-
 
 	if (split_line(&split, line))
 	{
@@ -80,9 +79,9 @@ static void	exec_all_commands(t_list *tokens)
 		{
 			close(fd_pipe[0]);
 			close(fd_loop[1]);
-			break;
+			break ;
 		}
-		exec_select(args, ind - 1, fd_loop[0], fd_loop[1]);
+		select_exec(args, ind - 1, fd_loop[0], fd_loop[1]);
 		close(fd_loop[0]);
 		close(fd_loop[1]);
 		lst = lst->next;
@@ -98,25 +97,18 @@ static void	loop_prompt(void)
 
 	while (1)
 	{
-		//Definir os sinais------------------
 		set_sigaction(&newact, sighandler_in_prompt);
-
-		//Ler  ------------------------------
+		signal(SIGQUIT, SIG_IGN);
 		if (read_and_adjust(&line))
 			continue ;
-
-		//Analisar  --------------------------
 		if (split_and_tokenizer(&tokens, line))
 			continue ;
-
-		//Executar  --------------------------
 		if (!(ft_strcmp(((t_command *)tokens->vol)->args[0], "exit")))
 		{
 			free_token(&tokens, ((t_command *)tokens->vol)->args, 0);
 			break ;
 		}
 		exec_all_commands(tokens);
-		//------------------------------------
 	}
 }
 
