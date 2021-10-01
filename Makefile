@@ -6,7 +6,7 @@
 #    By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/17 13:01:23 by mmoreira          #+#    #+#              #
-#    Updated: 2021/10/01 16:12:42 by mmoreira         ###   ########.fr        #
+#    Updated: 2021/10/01 19:19:35 by mmoreira         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -99,7 +99,7 @@ fclean:		clean
 	@echo ""
 #--------------------------------------//---------------------------------------
 install:
-	@sudo apt-get -y install libreadline6-dev
+	@sudo apt-get -y install libreadline-dev
 \
 re:			fclean all
 

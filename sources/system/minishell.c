@@ -6,7 +6,7 @@
 /*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 13:07:41 by mmoreira          #+#    #+#             */
-/*   Updated: 2021/10/01 16:48:49 by mmoreira         ###   ########.fr       */
+/*   Updated: 2021/10/01 18:39:47 by mmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	read_and_adjust(char **line)
 	free(prompt_reset);
 	free(prompt_full);
 	if (!(*line))
-		return (1);
+		exit_b(NULL);
 	if (!(*(*line)))
 	{
 		free(*line);
@@ -98,7 +98,6 @@ static void	loop_prompt(void)
 	while (1)
 	{
 		set_sigaction(&newact, sighandler_in_prompt);
-		signal(SIGQUIT, SIG_IGN);
 		if (read_and_adjust(&line))
 			continue ;
 		if (split_and_tokenizer(&tokens, line))

@@ -6,7 +6,7 @@
 /*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 00:54:12 by mmoreira          #+#    #+#             */
-/*   Updated: 2021/10/01 16:53:41 by mmoreira         ###   ########.fr       */
+/*   Updated: 2021/10/01 19:39:44 by mmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,11 @@ void	sighandler_in_execution(int sig)
 		g_shell.status = 130;
 		ft_putchar_fd('\n', 1);
 	}
+	if (sig == SIGQUIT)
+	{
+		g_shell.status = 131;
+		ft_putendl_fd("Quit (core dumped)", 2);
+	}
 }
 
 void	sighandler_in_prompt(int sig)
@@ -39,11 +44,6 @@ void	sighandler_in_prompt(int sig)
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
-	}
-	if (sig == SIGQUIT)
-	{
-		printf("oi\n");
-		exit_b(NULL);
 	}
 }
 
