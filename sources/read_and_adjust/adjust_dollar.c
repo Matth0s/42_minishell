@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   replace_dollar.c                                   :+:      :+:    :+:   */
+/*   adjust_dollar.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/23 01:45:01 by mmoreira          #+#    #+#             */
-/*   Updated: 2021/09/23 12:23:49 by mmoreira         ###   ########.fr       */
+/*   Updated: 2021/10/01 21:22:39 by mmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ static int	get_dollar_j(char *line, int quote)
 	int		j;
 
 	j = 1;
-	while (*(line + j) != ' ' && *(line + j) != '='
-		&& *(line + j) != '$' && *(line + j) != '\0')
+	while (*(line + j) != ' ' && *(line + j) != '=' && *(line + j) != '$'
+		&& *(line + j) != '\'' && *(line + j) != '\"' && *(line + j) != '\0')
 	{
 		if (*(line + j) == '\'' && ft_strchr((line + j + 1), '\'' ))
 			break ;

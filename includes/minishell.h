@@ -6,7 +6,7 @@
 /*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 13:07:52 by mmoreira          #+#    #+#             */
-/*   Updated: 2021/10/01 16:52:41 by mmoreira         ###   ########.fr       */
+/*   Updated: 2021/10/01 21:41:07 by mmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void			create_pipe(t_list *lst, int (*fd)[], int *fdin, int *fdout);
 int				open_fd(char *name, int flags, int direct, int *fd);
 char			**set_std_and_args(char **split, int *fdin, int *fdout);
 void			select_exec(char **args, int ind, int fdin, int fdout);
-void			exec_atribuation(char **args, int ind, int fdin, int fdout);
+int				exec_atribuation(char **args);
 int				is_builtins(char *command);
 void			exec_builtins(char **args, int ind, int fdout);
 void			exec_no_builtins(char **args, int fdin, int fdout);

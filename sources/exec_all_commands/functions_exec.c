@@ -6,7 +6,7 @@
 /*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 12:22:46 by mmoreira          #+#    #+#             */
-/*   Updated: 2021/10/01 16:18:50 by mmoreira         ###   ########.fr       */
+/*   Updated: 2021/10/01 21:40:37 by mmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	create_pipe(t_list *lst, int (*fd)[], int *fdin, int *fdout)
 		*fdout = dup(1);
 }
 
-void	exec_atribuation(char **args, int ind, int fdin, int fdout)
+int	exec_atribuation(char **args)
 {
 	int	i;
 
@@ -71,25 +71,27 @@ void	exec_atribuation(char **args, int ind, int fdin, int fdout)
 		while (*(args + ++i))
 			insert_var(*(args + i), 0);
 	}
-	else
-		select_exec(args + i, ind, fdin, fdout);
+	return (i);
 }
 
 void	select_exec(char **args, int ind, int fdin, int fdout)
 {
 	struct sigaction	newact;
-	char				*command;
+	int					equals;
 
 	if (args && *args)
 	{
-		command = *args;
+		equals = 0;
 		set_sigaction(&newact, sighandler_in_execution);
-		if (ft_strchr(command, '=') && *command != '=')
-			exec_atribuation(args, ind, fdin, fdout);
-		else if (is_builtins(command))
-			exec_builtins(args, ind, fdout);
-		else
-			exec_no_builtins(args, fdin, fdout);
+		if (ft_strchr(*args, '=') && **args != '=')
+			equals = exec_atribuation(args);
+		if (equals != ft_splitlen(args))
+		{
+			if (is_builtins(*(args + equals)))
+				exec_builtins(args + equals, ind, fdout);
+			else
+				exec_no_builtins(args + equals, fdin, fdout);
+		}
 	}
 	if (args)
 		ft_free_split(args);
