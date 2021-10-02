@@ -6,7 +6,7 @@
 /*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 12:22:46 by mmoreira          #+#    #+#             */
-/*   Updated: 2021/10/01 21:40:37 by mmoreira         ###   ########.fr       */
+/*   Updated: 2021/10/02 01:45:46 by mmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	open_fd(char *name, int flags, int direct, int *fd)
 	if (*fd != 0 && *fd != 1)
 		close(*fd);
 	if (name)
-		*fd = open(name, flags, 0777);
+		*fd = open(name, flags, 0664);
 	else
 	{
 		*fd = open("/tmp/here_document_minishell.tmp", flags, 0777);

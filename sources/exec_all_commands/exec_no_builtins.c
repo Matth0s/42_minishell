@@ -6,7 +6,7 @@
 /*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 17:23:46 by mmoreira          #+#    #+#             */
-/*   Updated: 2021/10/02 00:45:02 by mmoreira         ###   ########.fr       */
+/*   Updated: 2021/10/02 01:42:49 by mmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,8 @@ static char	*find_path_command(char *command)
 static int	find_command(char ***args)
 {
 	char	*command;
-	int		i;
 
-	i = 0;
-	while (*(**args + i) == '.')
-		i++;
-	if (*(**args + i) != '/')
+	if (!(ft_strchr(**args, '/')))
 	{
 		command = find_path_command(**args);
 		if (!(command))
@@ -113,5 +109,6 @@ void	exec_no_builtins(char **args, int fdin, int fdout)
 	}
 	waitpid(pid, &status, 0);
 	g_shell.status = WEXITSTATUS(status);
-	ft_free_split(envp);
+	if (envp)
+		ft_free_split(envp);
 }
