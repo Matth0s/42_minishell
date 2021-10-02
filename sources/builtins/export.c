@@ -6,7 +6,7 @@
 /*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 18:53:10 by mmoreira          #+#    #+#             */
-/*   Updated: 2021/10/01 16:18:07 by mmoreira         ###   ########.fr       */
+/*   Updated: 2021/10/02 00:46:25 by mmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,20 @@ static void	set_attribution(char *var, int *status)
 		insert_var(var, 1);
 }
 
-void	export_b(char **args, int fdout)
+static void	set_new_env(char *key)
 {
 	t_list	*lst;
+
+	lst = search_var(key);
+	if (lst)
+	{
+		((t_var *)lst->vol)->env = 1;
+		g_shell.numenv++;
+	}
+}
+
+void	export_b(char **args, int fdout)
+{
 	int		status;
 	int		i;
 
@@ -43,11 +54,7 @@ void	export_b(char **args, int fdout)
 			if (ft_strchr(*(args + i), '='))
 				set_attribution(*(args + i), &status);
 			else
-			{
-				lst = search_var(*(args + i));
-				if (lst)
-					((t_var *)lst->vol)->env = 1;
-			}
+				set_new_env(*(args + i));
 		}
 	}
 	g_shell.status = status;

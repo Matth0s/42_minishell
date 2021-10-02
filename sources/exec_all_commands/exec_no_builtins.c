@@ -6,7 +6,7 @@
 /*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 17:23:46 by mmoreira          #+#    #+#             */
-/*   Updated: 2021/09/29 22:49:50 by mmoreira         ###   ########.fr       */
+/*   Updated: 2021/10/02 00:45:02 by mmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,10 +97,10 @@ void	exec_no_builtins(char **args, int fdin, int fdout)
 
 	if (find_command(&args))
 		return ;
+	get_envp(&envp);
 	pid = fork();
 	if (pid < 0)
 		return ;
-	get_envp(&envp);
 	if (pid == 0)
 	{
 		change_standard_fd(fdin, fdout);
