@@ -6,7 +6,7 @@
 /*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 18:53:10 by mmoreira          #+#    #+#             */
-/*   Updated: 2021/10/02 00:46:25 by mmoreira         ###   ########.fr       */
+/*   Updated: 2021/10/02 11:49:53 by mmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 static void	set_attribution(char *var, int *status)
 {
-	if (*var == '=')
+	if (*var == '='
+		|| (ft_strchr(var, '\"')) || (ft_strchr(var, '\'')))
 	{
 		ft_putstr_fd("Minishell: export: `", 2);
 		ft_putstr_fd(var, 2);

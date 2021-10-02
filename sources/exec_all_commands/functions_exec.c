@@ -6,7 +6,7 @@
 /*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 12:22:46 by mmoreira          #+#    #+#             */
-/*   Updated: 2021/10/02 01:45:46 by mmoreira         ###   ########.fr       */
+/*   Updated: 2021/10/02 11:51:37 by mmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,13 @@ int	exec_atribuation(char **args)
 	int	i;
 
 	i = 0;
-	while (*(args + ++i))
-		if (!(ft_strchr(*(args + i), '=')) || *(*(args + i)) == '=')
+	while (*(args + i))
+	{
+		if (!(ft_strchr(*(args + i), '=')) || *(*(args + i)) == '='
+			|| (ft_strchr(*(args + i), '\"')) || (ft_strchr(*(args + i), '\'')))
 			break ;
+		i++;
+	}
 	if (i == ft_splitlen(args))
 	{
 		i = -1;

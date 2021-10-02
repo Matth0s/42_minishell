@@ -6,7 +6,7 @@
 /*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/23 01:45:01 by mmoreira          #+#    #+#             */
-/*   Updated: 2021/10/01 21:22:39 by mmoreira         ###   ########.fr       */
+/*   Updated: 2021/10/02 11:58:14 by mmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,29 +40,18 @@ static void	remove_dollar(char **line, int *i, int ind)
 	free(temp4);
 }
 
-static int	get_dollar_j(char *line, int quote)
+static int	get_dollar_j(char *line)
 {
 	int		j;
 
 	j = 1;
 	while (*(line + j) != ' ' && *(line + j) != '=' && *(line + j) != '$'
 		&& *(line + j) != '\'' && *(line + j) != '\"' && *(line + j) != '\0')
-	{
-		if (*(line + j) == '\'' && ft_strchr((line + j + 1), '\'' ))
-			break ;
-		if (*(line + j) == '\"')
-		{
-			if (quote == 1)
-				break ;
-			else if (ft_strchr((line + j + 1), '\"'))
-				break ;
-		}
 		j++;
-	}
 	return (j);
 }
 
-static void	replace_dollar(char **line, int *i, int quote)
+static void	replace_dollar(char **line, int *i)
 {
 	t_list	*lst;
 	char	*temp;
@@ -71,7 +60,7 @@ static void	replace_dollar(char **line, int *i, int quote)
 	int		j;
 
 	temp = ft_substr(*line, 0, *i);
-	j = get_dollar_j(*line + *i, quote);
+	j = get_dollar_j(*line + *i);
 	temp2 = ft_substr(*line, *i + 1, j - 1);
 	lst = search_var(temp2);
 	free(temp2);
@@ -97,7 +86,7 @@ static void	check_dollar(char **line, int *i, int quote)
 	}
 	else if (*(*line + *i + 1) == '\'')
 	{
-		if (ft_strchr((*line + *i + 2), '\''))
+		if (quote == -1 && ft_strchr((*line + *i + 2), '\''))
 			remove_dollar(line, i, 0);
 	}
 	else if (*(*line + *i + 1) == '$')
@@ -107,7 +96,7 @@ static void	check_dollar(char **line, int *i, int quote)
 	else if (*(*line + *i + 1) == ' ' || *(*line + *i + 1) == '=')
 		return ;
 	else
-		replace_dollar(line, i, quote);
+		replace_dollar(line, i);
 }
 
 void	adjust_dollar(char **line)

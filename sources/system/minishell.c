@@ -6,7 +6,7 @@
 /*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 13:07:41 by mmoreira          #+#    #+#             */
-/*   Updated: 2021/10/02 00:47:32 by mmoreira         ###   ########.fr       */
+/*   Updated: 2021/10/02 11:58:59 by mmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,11 +102,6 @@ static void	loop_prompt(void)
 			continue ;
 		if (split_and_tokenizer(&tokens, line))
 			continue ;
-		if (!(ft_strcmp(((t_command *)tokens->vol)->args[0], "exit")))
-		{
-			free_token(&tokens, ((t_command *)tokens->vol)->args, 0);
-			break ;
-		}
 		exec_all_commands(tokens);
 	}
 }
