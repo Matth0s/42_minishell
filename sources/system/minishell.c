@@ -6,7 +6,7 @@
 /*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 13:07:41 by mmoreira          #+#    #+#             */
-/*   Updated: 2021/10/02 11:58:59 by mmoreira         ###   ########.fr       */
+/*   Updated: 2021/10/02 13:14:38 by mmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,10 +98,13 @@ static void	loop_prompt(void)
 	while (1)
 	{
 		set_sigaction(&newact, sighandler_in_prompt);
+
 		if (read_and_adjust(&line))
 			continue ;
+
 		if (split_and_tokenizer(&tokens, line))
 			continue ;
+
 		exec_all_commands(tokens);
 	}
 }
