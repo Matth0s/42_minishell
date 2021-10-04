@@ -6,7 +6,7 @@
 /*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 13:07:41 by mmoreira          #+#    #+#             */
-/*   Updated: 2021/10/02 13:14:38 by mmoreira         ###   ########.fr       */
+/*   Updated: 2021/10/04 15:43:04 by mmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,20 +91,19 @@ static void	exec_all_commands(t_list *tokens)
 
 static void	loop_prompt(void)
 {
-	struct sigaction	newact;
+	struct sigaction	newact_int;
+	struct sigaction	newact_quit;
 	char				*line;
 	t_list				*tokens;
 
 	while (1)
 	{
-		set_sigaction(&newact, sighandler_in_prompt);
-
+		set_sigaction(&newact_int, sighandler_in_prompt, SIGINT);
+		set_sigaction(&newact_quit, SIG_IGN, SIGQUIT);
 		if (read_and_adjust(&line))
 			continue ;
-
 		if (split_and_tokenizer(&tokens, line))
 			continue ;
-
 		exec_all_commands(tokens);
 	}
 }

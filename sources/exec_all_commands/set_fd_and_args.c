@@ -6,7 +6,7 @@
 /*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 18:35:30 by mmoreira          #+#    #+#             */
-/*   Updated: 2021/10/01 16:53:23 by mmoreira         ###   ########.fr       */
+/*   Updated: 2021/10/04 15:58:13 by mmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	write_heredoc(char *eof, int fd)
 	struct sigaction	newact;
 	char				*line;
 
-	set_sigaction(&newact, sighandler_in_heredoc);
+	set_sigaction(&newact, sighandler_in_heredoc, SIGINT);
 	while (1)
 	{
 		line = readline("> ");
@@ -47,7 +47,8 @@ static void	open_heredoc(char *eof, int *fd)
 	int					status;
 	int					pid;
 
-	set_sigaction(&newact, SIG_IGN);
+	set_sigaction(&newact, SIG_IGN, SIGINT);
+	set_sigaction(&newact, SIG_IGN, SIGQUIT);
 	if (open_fd(NULL, O_WRONLY | O_CREAT | O_TRUNC, 0, fd))
 		return ;
 	pid = fork();

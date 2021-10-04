@@ -6,7 +6,7 @@
 /*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 12:22:46 by mmoreira          #+#    #+#             */
-/*   Updated: 2021/10/02 11:51:37 by mmoreira         ###   ########.fr       */
+/*   Updated: 2021/10/04 15:44:22 by mmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,8 @@ void	select_exec(char **args, int ind, int fdin, int fdout)
 	if (args && *args)
 	{
 		equals = 0;
-		set_sigaction(&newact, sighandler_in_execution);
+		set_sigaction(&newact, sighandler_in_execution, SIGINT);
+		set_sigaction(&newact, sighandler_in_execution, SIGQUIT);
 		if (ft_strchr(*args, '=') && **args != '=')
 			equals = exec_atribuation(args);
 		if (equals != ft_splitlen(args))

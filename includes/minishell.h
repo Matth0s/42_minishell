@@ -6,7 +6,7 @@
 /*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 13:07:52 by mmoreira          #+#    #+#             */
-/*   Updated: 2021/10/01 21:41:07 by mmoreira         ###   ########.fr       */
+/*   Updated: 2021/10/04 15:53:22 by mmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,8 @@ void			exit_b(char **args);
 void			sighandler_in_heredoc(int sig);
 void			sighandler_in_execution(int sig);
 void			sighandler_in_prompt(int sig);
-void			set_sigaction(struct sigaction *newact, void (*handler)(int));
+void			set_sigaction(struct sigaction *newact, void (*handler)(int),
+					int sig);
 
 //-------------------------------free_functions---------------------------------
 void			free_split_of_split(char **str);
