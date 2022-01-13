@@ -6,7 +6,7 @@
 /*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 12:22:46 by mmoreira          #+#    #+#             */
-/*   Updated: 2021/10/04 15:44:22 by mmoreira         ###   ########.fr       */
+/*   Updated: 2022/01/13 18:31:55 by mmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	create_pipe(t_list *lst, int (*fd)[], int *fdin, int *fdout)
 		*fdout = dup(1);
 }
 
-int	exec_atribuation(char **args)
+static int	exec_atribuation(char **args, int ind)
 {
 	int	i;
 
@@ -69,7 +69,7 @@ int	exec_atribuation(char **args)
 			break ;
 		i++;
 	}
-	if (i == ft_splitlen(args))
+	if (i == ft_splitlen(args) && !(ind))
 	{
 		i = -1;
 		while (*(args + ++i))
@@ -89,7 +89,7 @@ void	select_exec(char **args, int ind, int fdin, int fdout)
 		set_sigaction(&newact, sighandler_in_execution, SIGINT);
 		set_sigaction(&newact, sighandler_in_execution, SIGQUIT);
 		if (ft_strchr(*args, '=') && **args != '=')
-			equals = exec_atribuation(args);
+			equals = exec_atribuation(args, ind);
 		if (equals != ft_splitlen(args))
 		{
 			if (is_builtins(*(args + equals)))
