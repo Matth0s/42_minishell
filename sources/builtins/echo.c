@@ -21,7 +21,7 @@ void	echo_b(char	**args, int fdout)
 		ft_putendl_fd("\0", fdout);
 	else
 	{
-		if (!(strcmp(*(args + 1), "-n")))
+		if (!(ft_strcmp(*(args + 1), "-n")))
 			i = 1;
 		else
 			i = 0;
@@ -31,7 +31,7 @@ void	echo_b(char	**args, int fdout)
 			if (*(args + i + 1))
 				ft_putstr_fd(" ", fdout);
 		}
-		if (strcmp(*(args + 1), "-n"))
+		if (ft_strcmp(*(args + 1), "-n"))
 			ft_putendl_fd("\0", fdout);
 	}
 	g_shell.status = 0;

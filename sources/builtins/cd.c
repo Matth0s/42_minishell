@@ -88,9 +88,9 @@ void	cd_b(char **args, int fdout)
 		g_shell.status = go_to_varenv("HOME", 0);
 	else
 	{
-		if (!(strcmp(*(args + 1), "~")))
+		if (!(ft_strcmp(*(args + 1), "~")))
 			g_shell.status = go_to_varenv("HOME", 1);
-		else if (!(strcmp(*(args + 1), "-")))
+		else if (!(ft_strcmp(*(args + 1), "-")))
 		{
 			g_shell.status = go_to_varenv("OLDPWD", 0);
 			if (!(g_shell.status))
