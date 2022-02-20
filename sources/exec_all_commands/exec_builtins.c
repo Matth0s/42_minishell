@@ -6,7 +6,7 @@
 /*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 13:17:29 by mmoreira          #+#    #+#             */
-/*   Updated: 2021/09/29 16:09:07 by mmoreira         ###   ########.fr       */
+/*   Updated: 2022/02/19 13:39:56 by mmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	exec_builtins(char **args, int ind, int fdout)
 	else if (!(ft_strcmp(*args, "pwd")))
 		pwd_b(fdout);
 	else if (!(ft_strcmp(*args, "env")))
-		env_b(0, fdout);
+		env_b(fdout);
 	else if (ind)
 	{
 		g_shell.status = 0;

@@ -6,7 +6,7 @@
 #    By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/17 13:01:23 by mmoreira          #+#    #+#              #
-#    Updated: 2021/10/01 19:19:35 by mmoreira         ###   ########.fr        #
+#    Updated: 2022/02/20 14:42:10 by mmoreira         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ SRC		=	minishell.c \
 			tokenizer.c \
 			\
 			set_fd_and_args.c \
+			here_document.c \
 			functions_exec.c \
 			exec_builtins.c \
 			exec_no_builtins.c \
@@ -67,11 +68,11 @@ all:			$(NAME)
 
 $(NAME):	$(MODULE) $(OBJ)
 	$(CC) $(CFLAGS) $(FLAGS) $(OBJ) $(MODULE) -I $(INCD_DIR) -o $(NAME)
-	@echo ""
+	@echo "\033[1;32m"
 	@echo "/ ************************************ \\"
 	@echo "|           minishell Criado           |"
 	@echo "\\ ************************************ /"
-	@echo ""
+	@echo "\033[0m"
 
 $(MODULE):
 	make -C Libft
@@ -83,20 +84,20 @@ $(OBJ_DIR)/%.o:	%.c $(INCD)
 clean:
 	$(RM) $(OBJ_DIR)
 	make clean -C Libft
-	@echo ""
+	@echo "\033[1;31m"
 	@echo "/ ************************************ \\"
 	@echo "|        Arquivos .o Deletados         |"
 	@echo "\\ ************************************ /"
-	@echo ""
+	@echo "\033[0m"
 
 fclean:		clean
 	$(RM) $(NAME)
 	make aclean -C Libft
-	@echo ""
+	@echo "\033[1;31m"
 	@echo "/ ************************************ \\"
 	@echo "|          minishell Deletado          |"
 	@echo "\\ ************************************ /"
-	@echo ""
+	@echo "\033[0m"
 #--------------------------------------//---------------------------------------
 install:
 	@sudo apt-get -y install libreadline-dev

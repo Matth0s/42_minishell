@@ -6,7 +6,7 @@
 /*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 13:07:52 by mmoreira          #+#    #+#             */
-/*   Updated: 2022/01/13 18:32:06 by mmoreira         ###   ########.fr       */
+/*   Updated: 2022/02/20 14:07:57 by mmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ int				tokenizer(t_list **tokens, char ***split);
 
 //-----------------------------exec_all_commands--------------------------------
 void			create_pipe(t_list *lst, int (*fd)[], int *fdin, int *fdout);
-int				open_fd(char *name, int flags, int direct, int *fd);
-char			**set_std_and_args(char **split, int *fdin, int *fdout);
+char			**set_fds_and_args(char **split, int *fdin, int *fdout);
+int				set_heredoc(char *eof, int *fd);
 void			select_exec(char **args, int ind, int fdin, int fdout);
 int				is_builtins(char *command);
 void			exec_builtins(char **args, int ind, int fdout);
@@ -81,7 +81,7 @@ void			cd_b(char **args, int fdout);
 void			pwd_b(int fdout);
 void			export_b(char **args, int fdout);
 void			unset_b(char **args);
-void			env_b(int ind, int fdout);
+void			env_b(int fdout);
 void			exit_b(char **args);
 
 //-----------------------------------signal-------------------------------------

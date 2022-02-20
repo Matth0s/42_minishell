@@ -6,7 +6,7 @@
 /*   By: mmoreira <mmoreira@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 13:07:41 by mmoreira          #+#    #+#             */
-/*   Updated: 2021/10/04 15:43:04 by mmoreira         ###   ########.fr       */
+/*   Updated: 2022/02/20 13:57:11 by mmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static void	exec_all_commands(t_list *tokens)
 	{
 		create_pipe(lst, &fd_pipe, &fd_loop[0], &fd_loop[1]);
 		args = ((t_command *)lst->vol)->args;
-		args = set_std_and_args(args, &fd_loop[0], &fd_loop[1]);
+		args = set_fds_and_args(args, &fd_loop[0], &fd_loop[1]);
 		if (fd_loop[0] == -1)
 		{
 			close(fd_pipe[0]);
